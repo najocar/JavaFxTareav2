@@ -17,75 +17,55 @@ import org.javafx.model.Tarea;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class AdminController implements Initializable {
-    private ObservableList<Tarea> tareas;
-    @FXML
-    private Button botonSalir;
-    @FXML
-    private Button addTarea;
-    @FXML
-    private Button goHome;
-
-    @FXML
-    private Button modoOscuro;
     @FXML
     private TableView<Tarea> tabla;
     @FXML
-    private TableColumn colId;
+    private Button botonSalir, goHome, addTarea, modoOscuro;
     @FXML
-    private TableColumn colName;
+    private TableColumn colId, colName, colDesc, colEst;
     @FXML
-    private TableColumn colDesc;
+    private TextField textID, textNombre, textDescripcion, textEstado;
     @FXML
-    private TableColumn colEst;
+    private Label nTareas, sessionDate, sessionUserName, userNameField;
+    @FXML
+    private Pane navbar;
 
-    @FXML
-    private TextField textID;
-    @FXML
-    private TextField textNombre;
-
-    @FXML
-    private TextField textDescripcion;
-
-    @FXML
-    private TextField textEstado;
-    @FXML
-    private Label nTareas;
-
-
+    private ObservableList<Tarea> tareas;
+    private double xOffset = 0, yOffset = 0;
+    private static String username="admin";
 
     public void close(ActionEvent actionEvent) {
         Stage stage = (Stage) botonSalir.getScene().getWindow();
         stage.close();
     }
 
-
     public void goHome(ActionEvent actionEvent) throws IOException {
         App.setRoot("home");
     }
-
 
     public void modoOscuro(ActionEvent actionEvent){
         Scene scene = ((Node) actionEvent.getSource()).getScene();
         scene.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
     }
 
-
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // Agregar controlador de eventos onMousePressed al nodo raíz
         navbar.setOnMousePressed(event -> {
             xOffset = event.getSceneX();
             yOffset = event.getSceneY();
         });
 
-        // Agregar controlador de eventos onMouseDragged al nodo raíz
         navbar.setOnMouseDragged(event -> {
             Stage stage = (Stage) navbar.getScene().getWindow();
             stage.setX(event.getScreenX() - xOffset);
             stage.setY(event.getScreenY() - yOffset);
         });
+
+        reloadInfoSession();
+
         tareas = FXCollections.observableArrayList();
         this.colId.setCellValueFactory(new PropertyValueFactory("id"));
         this.colName.setCellValueFactory(new PropertyValueFactory("nombre"));
@@ -93,6 +73,7 @@ public class AdminController implements Initializable {
         this.colEst.setCellValueFactory(new PropertyValueFactory("estado"));
         reloadNTarea();
     }
+
     @FXML
     public void newTarea(){
         Tarea newTarea = new Tarea(Integer.parseInt(textID.getText()),textNombre.getText() , textDescripcion.getText(), textEstado.getText());
@@ -102,15 +83,14 @@ public class AdminController implements Initializable {
     }
 
     @FXML
-    private Pane navbar; // Referencia al nodo raíz de la escena
-
-    private double xOffset = 0;
-    private double yOffset = 0;
-
-    // Método de inicialización que se llama después de cargar la vista
-    @FXML
     public void reloadNTarea(){
         nTareas.setText(Integer.toString(tareas.size()));
     }
 
+    @FXML
+    public void reloadInfoSession(){
+        userNameField.setText(username);
+        sessionUserName.setText(username);
+        sessionDate.setText(LocalDate.now().toString());
+    }
 }

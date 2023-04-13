@@ -5,6 +5,9 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -13,25 +16,54 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.javafx.UserController">
    <children>
-      <VBox alignment="CENTER" layoutX="1.0" layoutY="-1.0" prefHeight="480.0" prefWidth="142.0" style="-fx-background-color: lightblue;">
+      <VBox prefHeight="480.0" prefWidth="141.0" style="-fx-background-color: lightblue;">
          <children>
-            <Button fx:id="addTareaButton" disable="true" mnemonicParsing="false" onAction="#newTarea" prefHeight="35.0" prefWidth="142.0" style="-fx-background-color: lightgrey;" text="+">
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
-            </Button>
-            <Button fx:id="addTareaButton1" disable="true" mnemonicParsing="false" onAction="#newTarea" prefHeight="35.0" prefWidth="142.0" style="-fx-background-color: lightgrey;" text="-">
-               <VBox.margin>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </VBox.margin>
-            </Button>
+            <VBox alignment="CENTER" prefHeight="385.0" prefWidth="114.0">
+               <children>
+                  <Pane prefHeight="120.0" prefWidth="99.0" style="-fx-border-color: #21618C; -fx-border-radius: 180;">
+                     <VBox.margin>
+                        <Insets bottom="10.0" top="30.0" />
+                     </VBox.margin>
+                     <children>
+                        <ImageView fitHeight="83.0" fitWidth="88.0" layoutX="19.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../imgUser.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </Pane>
+                  <TextField fx:id="userNameField" alignment="CENTER" promptText="Usuario" style="-fx-background-color: lightblue; -fx-border-color: #21618C; -fx-border-radius: 10;">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Button fx:id="btnSaveUserName" mnemonicParsing="false" onAction="#reloadUserName" text="Guardar" />
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="385.0" prefWidth="141.0">
+               <children>
+                  <Button fx:id="addTareaButton" disable="true" mnemonicParsing="false" onAction="#newTarea" prefHeight="35.0" prefWidth="142.0" style="-fx-background-color: lightgrey;" text="+">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </Button>
+                  <Button fx:id="addTareaButton1" disable="true" mnemonicParsing="false" onAction="#newTarea" prefHeight="35.0" prefWidth="142.0" style="-fx-background-color: lightgrey;" text="-">
+                     <VBox.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
          </children>
       </VBox>
       <HBox alignment="BOTTOM_CENTER" layoutX="155.0" layoutY="80.0" prefHeight="61.0" prefWidth="471.0" style="-fx-background-color: lightblue;">
          <children>
             <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Label fx:id="nTareas" text="15" textFill="#00128a">
+                  <Label fx:id="nTareas" text="0" textFill="#21618c">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
@@ -61,13 +93,13 @@
             <HBox layoutX="15.0" layoutY="13.0" prefHeight="19.0" prefWidth="261.0">
                <children>
                   <Label text="Sesion: " />
-                  <Label text="13/04/2023" />
+                  <Label fx:id="sessionDate" />
                   <Label text="Usuario: ">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
                   </Label>
-                  <Label text="usuario" />
+                  <Label fx:id="sessionUserName" />
                </children>
             </HBox>
             <HBox alignment="CENTER_RIGHT" layoutX="377.0" layoutY="6.0" prefHeight="30.0" prefWidth="261.0">

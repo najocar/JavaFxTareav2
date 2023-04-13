@@ -6,16 +6,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.javafx.model.Tarea;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class UserController implements Initializable {
@@ -23,26 +21,19 @@ public class UserController implements Initializable {
     @FXML
     private TableView<Tarea> tabla;
     @FXML
-    private TableColumn colId;
+    private TableColumn colId, colName, colDesc, colEst;
     @FXML
-    private TableColumn colName;
+    private Label nTareas, sessionDate, sessionUserName;
     @FXML
-    private TableColumn colDesc;
+    private Button addTareaButton, exitButton, backToHomeButton;
     @FXML
-    private TableColumn colEst;
+    private Pane navbar;
     @FXML
-    private Label nTareas;
-    @FXML
-    private Button addTareaButton;
-    @FXML
-    private Button backToHomeButton;
-    @FXML Button exitButton;
-    @FXML
-    private Pane navbar; // Referencia al nodo raíz de la escena
+    private TextField userNameField;
 
     private ObservableList<Tarea> tareas;
-    private double xOffset = 0;
-    private double yOffset = 0;
+    private double xOffset = 0, yOffset = 0;
+    private static String username = "usuario";
 
 
     @Override
@@ -57,6 +48,8 @@ public class UserController implements Initializable {
             stage.setY(event.getScreenY() - yOffset);
         });
 
+        reloadInfoSession();
+
         tareas = FXCollections.observableArrayList();
         this.colId.setCellValueFactory(new PropertyValueFactory("id"));
         this.colName.setCellValueFactory(new PropertyValueFactory("nombre"));
@@ -64,7 +57,6 @@ public class UserController implements Initializable {
         this.colEst.setCellValueFactory(new PropertyValueFactory("estado"));
 
         reloadNTarea();
-
     }
 
     public void newTarea(){
@@ -89,5 +81,18 @@ public class UserController implements Initializable {
     @FXML
     public void reloadNTarea(){
         nTareas.setText(Integer.toString(tareas.size()));
+    }
+
+    @FXML
+    public void reloadUserName(){
+        username=userNameField.getText();
+        reloadInfoSession();
+    }
+
+    @FXML
+    public void reloadInfoSession(){
+        userNameField.setText(username);
+        sessionUserName.setText(username);
+        sessionDate.setText(LocalDate.now().toString());
     }
 }
